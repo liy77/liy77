@@ -1,5 +1,5 @@
  <h1 align="center">
-    Hewo~
+    😺 Hewo~
  </h1>
 
 <div align="center">
