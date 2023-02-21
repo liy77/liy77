@@ -7,8 +7,11 @@
   </a>
 </div>
 
-![snake gif](https://github.com/JustAWaifuHunter/JustAWaifuHunter/blob/output/github-contribution-grid-snake.gif)
+<div align="center">
 
+  ![Snake animation](https://github.com/JustAWaifuHunter/JustAWaifuHunter/blob/output/github-contribution-grid-snake.svg)
+  
+</div>
 <!--
 **JustAWaifuHunter/JustAWaifuHunter** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
