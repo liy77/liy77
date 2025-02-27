@@ -4,8 +4,8 @@
 
 <div align="center">
   <a href="https://github.com/JustAWaifuHunter">
-    <img height="150em" src="https://github-readme-stats.vercel.app/api?username=JustAWaifuHunter&count_private=true&include_all_commits=true&show_icons=true&theme=dracula&hide_border=false&show_owner=true"/>
-    <img height="150em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=JustAWaifuHunter&theme=dracula&hide_border=false&&layout=compact"/>
+    <img height="150em" src="https://github-readme-stats.vercel.app/api?username=liy77&count_private=true&include_all_commits=true&show_icons=true&theme=dracula&hide_border=false&show_owner=true"/>
+    <img height="150em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=liy77&theme=dracula&hide_border=false&&layout=compact"/>
   </a>
 </div>
 
@@ -16,11 +16,13 @@
   <img align="center" alt="kt" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kotlin/kotlin-original.svg">
   <img align="center" alt="go" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg">
   <img align="center" alt="py" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg">
+  <img align="center" alt="cpp" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/refs/heads/master/icons/cplusplus/cplusplus-original.svg">
+  <img align="center" alt="rust" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/refs/heads/master/icons/cplusplus/cplusplus-original.svg">
 </div>
 
 <div align="center">
 
-  ![Snake animation](https://github.com/JustAWaifuHunter/JustAWaifuHunter/blob/output/github-contribution-grid-snake.svg)
+  ![Snake animation](https://github.com/liy77/liy77/blob/output/github-contribution-grid-snake.svg)
   
 </div>
 <!--
