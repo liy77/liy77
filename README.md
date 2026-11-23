@@ -15,7 +15,7 @@ I write [Mikasa](https://github.com/liy77/mikasa), a language that transpiles to
 </td>
 <td width="32%" align="center" valign="middle">
 
-<img src="assets/mikasa-ackerman.jpg" width="210" alt="Mikasa Ackerman"/>
+<img src="assets/mikasa-ackerman.png" width="210" alt="Mikasa Ackerman"/>
 
 </td>
 </tr>
