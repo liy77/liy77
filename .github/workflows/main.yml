@@ -9,13 +9,13 @@ permissions:
   contents: write
 
 jobs:
-  mikasa-commits:
-    name: Refresh Mikasa commits
+  mikasa-release:
+    name: Refresh the latest Mikasa release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Rewrite the latest-commits block
+      - name: Rewrite the latest-release blocks
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -23,70 +23,120 @@ jobs:
           python3 << 'PY'
           import json, os, re, urllib.request
 
-          req = urllib.request.Request(
-              "https://api.github.com/repos/liy77/mikasa/commits?per_page=20&sha=master",
-              headers={
-                  "Accept": "application/vnd.github+json",
-                  "User-Agent": "liy77-profile",
-                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
-              },
-          )
-          with urllib.request.urlopen(req, timeout=30) as res:
-              commits = json.load(res)
+          def get(url):
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "User-Agent": "liy77-profile",
+                      "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=30) as res:
+                  return json.load(res)
 
-          rows = []
-          for commit in commits:
-              if commit["commit"]["message"].startswith("Merge "):
-                  continue
-              sha = commit["sha"]
-              short = sha[:7]
-              date = commit["commit"]["author"]["date"][:10]
-              message = commit["commit"]["message"].split("\n", 1)[0]
-              message = (
-                  message.replace("&", "&amp;")
+          def esc(text):
+              return (
+                  text.replace("&", "&amp;")
                   .replace("<", "&lt;")
                   .replace(">", "&gt;")
               )
-              url = f"https://github.com/liy77/mikasa/commit/{sha}"
-              if len(rows) == 6:
-                  break
-              rows.append(
-                  "<tr>"
-                  f'<td width="92"><a href="{url}"><code>{short}</code></a></td>'
-                  f'<td width="108"><sub>{date}</sub></td>'
-                  f'<td><a href="{url}">{message}</a></td>'
-                  "</tr>"
+
+          release = get("https://api.github.com/repos/liy77/mikasa/releases/latest")
+          tag = release["tag_name"]
+          url = release["html_url"]
+          body = release.get("body") or ""
+          published = (release.get("published_at") or "")[:10]
+          target = release.get("target_commitish") or "master"
+
+          sha_match = re.search(r"\b([0-9a-f]{7,40})\b", body)
+          head = sha_match.group(1) if sha_match else target
+
+          older = get("https://api.github.com/repos/liy77/mikasa/releases?per_page=8")
+          previous = next((item["tag_name"] for item in older if item["tag_name"] != tag), None)
+
+          commits = []
+          if previous:
+              compared = get(
+                  "https://api.github.com/repos/liy77/mikasa/compare/"
+                  f"{previous}...{head}"
+              )
+              commits = compared.get("commits") or []
+          if not commits:
+              commits = get(
+                  "https://api.github.com/repos/liy77/mikasa/commits"
+                  f"?sha={head}&per_page=12"
               )
 
-          block = (
-              "<!-- MIKASA-COMMITS:START -->\n"
-              '<table width="100%">\n'
-              + "\n".join(rows)
-              + "\n</table>\n"
-              "<!-- MIKASA-COMMITS:END -->"
+          notes = []
+          for raw in body.splitlines():
+              line = raw.strip()
+              if line.startswith(("- ", "* ")) and "```" not in line:
+                  notes.append(esc(line[2:].strip()))
+              if len(notes) == 6:
+                  break
+
+          commit_lines = []
+          for commit in reversed(commits):
+              message = commit["commit"]["message"].split("\n", 1)[0]
+              if message.startswith("Merge "):
+                  continue
+              sha = commit["sha"]
+              commit_lines.append(
+                  f'- [`{sha[:7]}`](https://github.com/liy77/mikasa/commit/{sha}) {esc(message)}'
+              )
+              if len(commit_lines) == 6:
+                  break
+
+          note_block = "\n".join(f"- {note}" for note in notes) or "_No notes published._"
+          commit_block = "\n".join(commit_lines) or "_No commits listed._"
+          release_block = (
+              "<!-- MIKASA-RELEASE:START -->\n"
+              f"### [{esc(tag)}]({url})\n\n"
+              f"<sub>Published {published}</sub>\n\n"
+              "**Release notes**\n\n"
+              f"{note_block}\n\n"
+              "**Commits in this release**\n\n"
+              f"{commit_block}\n"
+              "<!-- MIKASA-RELEASE:END -->"
+          )
+          badge = tag.replace("-", "--").replace(" ", "_")
+          badge_block = (
+              "<!-- MIKASA-RELEASE-BADGE:START -->\n"
+              f'<a href="{url}">\n'
+              f'<img src="https://img.shields.io/badge/latest-{badge}'
+              '-111111?style=for-the-badge" alt="Latest release"/>\n'
+              "</a>\n"
+              "<!-- MIKASA-RELEASE-BADGE:END -->"
           )
 
           path = "README.md"
           with open(path, encoding="utf-8") as handle:
               readme = handle.read()
-          updated, count = re.subn(
-              r"<!-- MIKASA-COMMITS:START -->.*?<!-- MIKASA-COMMITS:END -->",
-              block,
-              readme,
-              count=1,
-              flags=re.S,
-          )
-          if count != 1:
-              raise SystemExit("Mikasa commits markers were not found in README.md")
+          updated = readme
+          for marker, block in (
+              ("MIKASA-RELEASE", release_block),
+              ("MIKASA-RELEASE-BADGE", badge_block),
+          ):
+              updated, count = re.subn(
+                  rf"<!-- {marker}:START -->.*?<!-- {marker}:END -->",
+                  block,
+                  updated,
+                  count=1,
+                  flags=re.S,
+              )
+              if count != 1:
+                  raise SystemExit(f"{marker} markers were not found in README.md")
+
           if updated == readme:
-              print("Commits unchanged.")
+              print(f"Latest release unchanged ({tag}).")
           else:
               with open(path, "w", encoding="utf-8") as handle:
                   handle.write(updated)
-              print("Commits refreshed.")
+              print(f"Latest release refreshed ({tag}).")
           PY
 
-      - name: Commit when the list changed
+      - name: Commit when the release changed
         run: |
           if git diff --quiet -- README.md; then
             echo "Nothing to commit."
@@ -95,5 +145,5 @@ jobs:
           git config user.name "liy77"
           git config user.email "73443391+liy77@users.noreply.github.com"
           git add README.md
-          git commit -m "Refresh latest Mikasa commits."
+          git commit -m "Refresh the latest Mikasa release."
           git push
