@@ -141,6 +141,9 @@ func main() {
 
 **Commits in this release**
 
+- [`99d761c`](https://github.com/liy77/mikasa/commit/99d761c8f02efc987caab8ba98efa498ec79a171) Ship Astra branding, GUI Icon fallbacks, and mikasa format/check.
+- [`a836289`](https://github.com/liy77/mikasa/commit/a8362892bf0bee699ba376091126840fa6642bb1) Parse KSON through the LSON toolkit.
+- [`c9db951`](https://github.com/liy77/mikasa/commit/c9db95107df01f87a9d0aafbfcc4fe14c084651c) Make examples idiomatic Mikasa and auto-format interpolation args.
 - [`972e2f9`](https://github.com/liy77/mikasa/commit/972e2f9f0a7c1a09bfa000f17e07cc88cbae5a5c) Improve auto-borrow and add phantom T markers with run-time hints.
 - [`1d8618e`](https://github.com/liy77/mikasa/commit/1d8618e7ff6e9a9c53446c36da2b466c25bb4076) Add Mikasa language features: Codable JSON, actors, async Tokio, and property sugar.
 <!-- MIKASA-RELEASE:END -->
