@@ -81,8 +81,8 @@ A language that transpiles to Rust. Astra interprets it instantly. Formerly Copp
 <img src="https://img.shields.io/badge/project-liy77%2Fmikasa-E10600?style=for-the-badge&logo=github&logoColor=white" alt="Mikasa project"/>
 </a>
 <!-- MIKASA-RELEASE-BADGE:START -->
-<a href="https://github.com/liy77/mikasa/releases/tag/nightly-2026-11-23">
-<img src="https://img.shields.io/badge/latest-nightly--2026--11--23-111111?style=for-the-badge" alt="Latest release nightly-2026-11-23"/>
+<a href="https://github.com/liy77/mikasa/releases/tag/v0.26.6">
+<img src="https://img.shields.io/badge/latest-v0.26.6-111111?style=for-the-badge" alt="Latest release"/>
 </a>
 <!-- MIKASA-RELEASE-BADGE:END -->
 <a href="https://github.com/liy77/mikasa/stargazers">
@@ -128,27 +128,21 @@ func main() {
 ## Latest release
 
 <!-- MIKASA-RELEASE:START -->
-### [nightly-2026-11-23](https://github.com/liy77/mikasa/releases/tag/nightly-2026-11-23)
+### [v0.26.6](https://github.com/liy77/mikasa/releases/tag/v0.26.6)
 
-<sub>Published 2026-11-23</sub>
+<sub>Published 2026-06-03</sub>
 
 **Release notes**
 
-- `mikasa-*` — toolchain CLI (transpile / run / update / vm)
-- `cforge-*` — legacy alias of `mikasa` (same binary)
-- `astra-*` — Astra interpreter (instant `.mika` run)
-- `mikasa-lsp-*` — language server
-- **Linux x86_64** — `*-linux-x86_64`
-- **Windows x86_64** — `*-windows-x86_64.exe`
+- Copper language front-end (tokenizer, parser, LSP) + `cforge` compiler + `cstd` stdlib.
+- **MUI**: `cforge run x.mui` renders a declarative UI live; `cforge -c [-r] x.mui` lowers it to a native Rust crate (`mui-codegen`).
+- MUI components: reactive counter, `onKeyInput`, styling/anchors, components + cross-file imports, `app.bundle` assets, and **Video / WebView** (runtime + codegen) with cross-platform video corner `radius`.
+- VS Code extension for Copper + MUI, and a MUI-based GUI installer (no Tauri).
 
 **Commits in this release**
 
-- [`eeaeb1a`](https://github.com/liy77/mikasa/commit/eeaeb1a1fe41aafedf4d715897fa3c552682d7eb) Ship a full cross-platform nightly SDK in the Release workflow.
-- [`a8b73fa`](https://github.com/liy77/mikasa/commit/a8b73fa248b60bc6cd7e51f813e3a9a5e576e3d2) Fix the test runner to rebuild Astra and refresh README examples.
-- [`079f9df`](https://github.com/liy77/mikasa/commit/079f9df0ebcda26f8db356db7003463a649d0fed) Add Mikasa language test suite and a single runner.
-- [`e0c93ae`](https://github.com/liy77/mikasa/commit/e0c93ae8cdddd5ebfedd4c8b1fb430f086f75f32) Ship Mikasa file imports, Astra wasm ergonomics, and split TODOs.
-- [`f8f4050`](https://github.com/liy77/mikasa/commit/f8f4050b6225123ae88fbf6a6fdd1446e8e76192) Warn about deprecated names in the editor, not only at run time.
-- [`644f589`](https://github.com/liy77/mikasa/commit/644f589eb76970a146b63eb915e459e1a748707b) Rename examples/copper to examples/mikasa and translate the Portuguese.
+- [`972e2f9`](https://github.com/liy77/mikasa/commit/972e2f9f0a7c1a09bfa000f17e07cc88cbae5a5c) Improve auto-borrow and add phantom T markers with run-time hints.
+- [`1d8618e`](https://github.com/liy77/mikasa/commit/1d8618e7ff6e9a9c53446c36da2b466c25bb4076) Add Mikasa language features: Codable JSON, actors, async Tokio, and property sugar.
 <!-- MIKASA-RELEASE:END -->
 
 ---
