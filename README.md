@@ -141,6 +141,7 @@ func main() {
 
 **Commits in this release**
 
+- [`37723ab`](https://github.com/liy77/mikasa/commit/37723ab91b729f3768c1b251f2bea9ab94423d00) Fit listen canvas to the CSS viewport on high-DPR phones.
 - [`99d761c`](https://github.com/liy77/mikasa/commit/99d761c8f02efc987caab8ba98efa498ec79a171) Ship Astra branding, GUI Icon fallbacks, and mikasa format/check.
 - [`a836289`](https://github.com/liy77/mikasa/commit/a8362892bf0bee699ba376091126840fa6642bb1) Parse KSON through the LSON toolkit.
 - [`c9db951`](https://github.com/liy77/mikasa/commit/c9db95107df01f87a9d0aafbfcc4fe14c084651c) Make examples idiomatic Mikasa and auto-format interpolation args.
